@@ -136,6 +136,12 @@ module.exports = function (grunt) {
             nonull: true,
             filter: file_exists,
           },
+          {
+            src: ['src/less/rss.less'],
+            dest: 'css/rss.min.css',
+            nonull: true,
+            filter: file_exists,
+          },
         ],
       },
     },
@@ -218,7 +224,7 @@ module.exports = function (grunt) {
               name: "addAttributesToSVGElement",
               params: {
                 attributes: [
-                  { "aria-hidden": "true" }
+                  { "class": "ionicon", "aria-hidden": "true" }
                 ]
               }
             }

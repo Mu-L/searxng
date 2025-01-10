@@ -3,7 +3,7 @@
 {% macro engine_data_form(engine_data) -%}
     {% for engine_name, kv_data in engine_data.items() %}
         {% for k, v in kv_data.items() %}
-            <input type="hidden" name="engine_data-{{ engine_name }}-{{ k|e }}" value="{{ v|e }}" />
+            <input type="hidden" name="engine_data-{{ engine_name }}-{{ k|e }}" value="{{ v|e }}">
         {% endfor %}
     {% endfor %}
 {%- endmacro %}
@@ -24,8 +24,12 @@
         {%- for answer in answers.values() -%}
         <div class="answer">
         <span>{{ answer.answer }}</span>
-          {% if answer.url -%}
-          <a href="{{ answer.url }}" class="answer-url">{{ urlparse(answer.url).hostname }}</a>
+          {%- if answer.url -%}
+          <a href="{{ answer.url }}" class="answer-url"
+             {%- if results_on_new_tab %} target="_blank" rel="noopener noreferrer"
+             {%- else -%} rel="noreferrer"
+             {%- endif -%}
+             >{{ urlparse(answer.url).hostname }}</a>
           {% endif -%}
         </div>
         {%- endfor -%}
@@ -40,7 +44,7 @@
 
         {%- if infoboxes -%}
           <div id="infoboxes">
-            <details open class="sidebar-collapsable">
+            <details open class="sidebar-collapsible">
               <summary class="title">{{ _('Info') }}</summary>
               {%- for infobox in infoboxes -%}
                 {%- include 'simple/elements/infobox.html' -%}
@@ -53,19 +57,17 @@
           {%- include 'simple/elements/suggestions.html' -%}
         {%- endif -%}
 
+        {%- include 'simple/elements/engines_msg.html' -%}
+
         {%- if method == 'POST' -%}
           {%- include 'simple/elements/search_url.html' -%}
         {%- endif -%}
-
-        {%- if unresponsive_engines -%}
-          {%- include 'simple/elements/engines_msg.html' -%}
-	{%- endif -%}
 
         {%- if search_formats -%}
           {%- include 'simple/elements/apis.html' -%}
         {%- endif -%}
 
-        <div id="sidebar-end-collapsable"></div>
+        <div id="sidebar-end-collapsible"></div>
     </div>
 
     {% if corrections %}
